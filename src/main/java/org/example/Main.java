@@ -1,6 +1,6 @@
 package org.example;
 
-import com.google.gson.Gson;
+import com.google.gson.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -25,52 +25,21 @@ public class Main {
 
         SubmissionServiceRequest submissionServiceRequest = submissionServiceRequestBuilder.build();
 
-        Root root = new Root(new BusinessData(contrAgent, submissionServiceRequest));
+        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.add("ContrAgent", JsonParser.parseString(gson.toJson(contrAgent)));
+        jsonObject.add("SubmissionServiceRequest", JsonParser.parseString(gson.toJson(submissionServiceRequest)));
+        JsonObject jsonObject1 = new JsonObject();
+        gson.toJson(jsonObject);
 
-        Gson gson = new Gson();
-        String json = gson.toJson(root);
-        System.out.println(json);
-    }
-}
+        jsonObject1.add("BusinessData", JsonParser.parseString(gson.toJson(jsonObject)));
 
-class Root {
-    private BusinessData businessData;
-
-    public Root(BusinessData businessData) {
-        this.businessData = businessData;
-    }
-}
-
-class BusinessData {
-    private ContrAgent contrAgent;
-    private SubmissionServiceRequest submissionServiceRequest;
-
-    public BusinessData(ContrAgent contrAgent, SubmissionServiceRequest submissionServiceRequest) {
-        this.contrAgent = contrAgent;
-        this.submissionServiceRequest = submissionServiceRequest;
-    }
-
-    public ContrAgent getContrAgent() {
-        return contrAgent;
-    }
-
-    public void setContrAgent(ContrAgent contrAgent) {
-        this.contrAgent = contrAgent;
-    }
-
-    public SubmissionServiceRequest getSubmissionServiceRequest() {
-        return submissionServiceRequest;
-    }
-
-    public void setSubmissionServiceRequest(SubmissionServiceRequest submissionServiceRequest) {
-        this.submissionServiceRequest = submissionServiceRequest;
-    }
-
-    public BusinessData() {
+        System.out.println(jsonObject1);
     }
 }
 
 class ContrAgent {
+    Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
     private String agentKPP;
     private String agentINN;
     private int branchCode;

@@ -1,0 +1,14 @@
+{
+  "businessData": {
+    "contrAgent": {
+      "agentKPP": "502701001",
+      "agentINN": "7707067683",
+      "branchCode": 17714041,
+      "regionIdCalc": "77",
+      "skName": "RGSRU"
+    },
+    "submissionServiceRequest": {
+      "contractId": "000006073"
+    }
+  }
+}

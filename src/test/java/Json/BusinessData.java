@@ -8,11 +8,7 @@ public class BusinessData {
     public BusinessData addContrAgent() {
         ContrAgent contrAgent = new ContrAgent();
         JsonObject contrAgentObject = contrAgent
-                .getAgentKPP()
-                .getAgentINN()
-                .getBranchCode()
-                .getRegionIdCalc()
-                .getSkName()
+                .addContrAgent(Agents.CONTRAGENT)
                 .build();
         businessDataObject.add("ContrAgent", contrAgentObject);
         return this;
@@ -25,6 +21,11 @@ public class BusinessData {
                 .addPersons()
                 .build();
         businessDataObject.add("Contract", contractObject);
+        return this;
+    }
+
+    public BusinessData addBaseProductName(String baseProductName){
+        businessDataObject.addProperty("BaseProductName", baseProductName);
         return this;
     }
 

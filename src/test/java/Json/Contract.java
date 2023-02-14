@@ -3,26 +3,53 @@ package Json;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Contract {
-    public static void main(String[] args) {
-        Gson gson = new Gson();
-        Person person = new Person();
-        Header header = new Header();
-        JsonObject personsObj = person.addEmails().addPhones().build();
-        JsonObject headerObj = header.addHeader();
+    JsonObject jsonInsideContractArrayObject = new JsonObject();
+    private final JsonObject upperContractObject = new JsonObject();
 
+
+    public Contract addHeader() {
+        Header header = new Header();
+        JsonObject headerObj = header
+                .addBranchCode("123")
+                .isProlonged(true)
+                .addHeader()
+                .build();
+        jsonInsideContractArrayObject.add("Header", headerObj);
+        return this;
+    }
+
+    public Contract addPersons() {
+        Persons persons = new Persons();
+        JsonArray personsObj = persons
+                .addBirthday("1979-06-23")
+                .addGender("M")
+                .isResident(true)
+                .addFirstNameRus("Клиент")
+                .addLastNameRus("Тестовый")
+                .addMiddleNameRus("Тестович")
+                .addEmails()
+                .addPhones()
+                .build();
+        jsonInsideContractArrayObject.add("Persons", personsObj);
+        return this;
+    }
+
+    public JsonObject build() {
+        JsonObject contractsObject = new JsonObject();
         JsonArray contractArray = new JsonArray();
-        JsonObject prshdr = new JsonObject();
-        prshdr.add("Persons", personsObj);
-        prshdr.add("Header", headerObj);
-        contractArray.add(prshdr);
-        JsonObject contractsObj = new JsonObject();
-        contractsObj.add("Contract", contractArray);
-        System.out.println(gson.toJson(contractsObj));
+        contractArray.add(jsonInsideContractArrayObject);
+        contractsObject.add("Contract", contractArray);
+        upperContractObject.add("Contracts", contractsObject);
+        upperContractObject.addProperty("ContractsCount", contractArray.size());
+        upperContractObject.addProperty("SchemaVersion", "1.0");
+        return upperContractObject;
+    }
+
+    public static void main(String[] args) {
+        Contract contract = new Contract();
+        Gson gson = new Gson();
+        System.out.println(gson.toJson(contract.addHeader().addPersons().build()));
     }
 }

@@ -8,6 +8,10 @@ public class Persons {
     private final JsonArray personArray = new JsonArray();
     private final JsonObject personObject = new JsonObject();
 
+    public JsonObject getPersonObject(){
+        return personObject;
+    }
+
     public Persons addBirthday(String birthday) {
         personObject.addProperty("Birthday", birthday);
         return this;

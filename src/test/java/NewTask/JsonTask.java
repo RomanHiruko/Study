@@ -42,13 +42,8 @@ public class JsonTask {
             // Спарсить ContractBody JSON строку в Json
             JsonNode contractBodyNode = objectMapper.readTree(contractBodyJsonString);
 
-            //Записать ContractBody в файл
-            objectMapper.writeValue(outputFile, contractBodyNode);
-            File actualJson = new File("src/test/java/NewTask/ParsedJson.json");
-
             //Сравнить ожидаемый и полученный JSON
-            JsonNode actualNode = objectMapper.readTree(actualJson);
-            assertJsonEquals(expectedNode, actualNode);
+            assertJsonEquals(expectedNode, contractBodyNode);
 
         } catch (IOException e) {
             e.printStackTrace();
